@@ -86,7 +86,7 @@ $username = $loggedIn ? (string)$_SESSION['username'] : '';
     </div>
 
     <main class="marquee">
-        <section class="screen confirm-screen">
+        <section class="screen confirm-screen home-screen">
 
             <h1 class="big-title">Millionaire Challenge</h1>
 
@@ -154,4 +154,3 @@ $username = $loggedIn ? (string)$_SESSION['username'] : '';
 </div>
 </body>
 </html>
-
