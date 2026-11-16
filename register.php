@@ -1,4 +1,3 @@
-
 <?php
 /**
  * register.php - Millionaire Challenge (CSC 4370 Project 2)
@@ -120,7 +119,7 @@ $registeredCount = count($_SESSION['registered_users']);
     </div>
 
     <main class="marquee">
-        <section class="screen confirm-screen">
+        <section class="screen confirm-screen home-screen">
 
             <h1 class="big-title">Millionaire Challenge</h1>
             <h2>Player Registration</h2>
