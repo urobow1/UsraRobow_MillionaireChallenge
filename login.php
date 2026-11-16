@@ -140,7 +140,7 @@ $loggedInCount = count($_SESSION['authenticated_players']);
     </div>
 
     <main class="marquee">
-        <section class="screen confirm-screen">
+        <section class="screen confirm-screen home-screen">
 
             <h1 class="big-title">Millionaire Challenge</h1>
             <h2>Player Login</h2>
