@@ -13,14 +13,10 @@
  *
  * Session variables used
  *   $_SESSION['username']              set by login.php (logged-in user; guard below)
- *   $_SESSION['players']               set by register.php: a number (1 or 2) or a list of
- *                                      player names, e.g. ['Alexa', 'Usra']
+ *   $_SESSION['players']               set by register.php: two different user registrations 
  *   $_SESSION['score'] / ['round']     kept in sync here for the player whose turn it is
  *   $_SESSION['game']                  full game state (players, turn, current question...)
  *
- * If players is a number, player 1 is the logged-in username and the rest are
- * "Player 2" etc.  If it is a list, those names are used (a blank name falls back
- * the same way).  
  */
 
 session_start();
