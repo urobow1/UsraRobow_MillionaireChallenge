@@ -1,7 +1,7 @@
 /* =========================================================
    Millionaire Challenge - styles.css
    CSC 4370 Web Programming - Project 2
-   Pure CSS (no JavaScript). Shared by every page.
+   Pure CSS. Shared by every page.
 
    Page skeleton used by game.php, leaderboard.php, logout.php
    (index.php / login.php / register.php can reuse it too):
@@ -534,6 +534,27 @@
    .confirm-actions { display: flex; gap: 3.2vw; justify-content: center; flex-wrap: wrap; width: 100%; }
    .confirm-actions form { margin: 0; display: contents; }
    .confirm-actions .pill { min-width: 18vw; font-size: clamp(1.1rem, 1.9vw, 2.1rem); }
+
+   /* index.php - larger body text between the title and the buttons */
+   .home-screen { gap: 2.5vh; }
+   .home-screen p {
+     margin: 0;
+     font-size: clamp(1.3rem, 2.6vw, 3rem);
+     line-height: 1.25;
+   }
+   .home-screen p:first-of-type { color: var(--gold-soft); }   /* tagline */
+
+   /* login.php / register.php share the same larger text */
+   .home-screen h2 {
+     margin: 0;
+     font-size: clamp(1.6rem, 3.2vw, 3.6rem);
+     color: var(--gold-soft);
+   }
+   .home-screen .form-stack { gap: 1.2vh; width: min(100%, 560px); }
+   .home-screen .form-stack label { font-size: clamp(1.1rem, 1.8vw, 2rem); }
+   .home-screen .form-stack input[type="text"],
+   .home-screen .form-stack input[type="password"] { font-size: clamp(1.1rem, 1.7vw, 1.9rem); }
+   .home-screen .alert { font-size: clamp(1.1rem, 2vw, 2.2rem); }
    
    /* ---------------------------------------------------------
       Responsive: tablets
@@ -596,4 +617,3 @@
    @media (prefers-reduced-motion: reduce) {
      .pill { transition: none; }
    }
-
