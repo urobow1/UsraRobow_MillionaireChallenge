@@ -71,27 +71,7 @@ function clean_name($name, string $fallback): string
     return $name !== '' ? $name : $fallback;
 }
 
-function data_dir(): string
-{
-    $dir = __DIR__ . '/data';
-    if (!is_dir($dir)) {
-        @mkdir($dir, 0755, true);
-    }
-    $ht = $dir . '/.htaccess';
-    if (is_dir($dir) && !file_exists($ht)) {
-        @file_put_contents($ht,
-            "<IfModule mod_authz_core.c>\nRequire all denied\n</IfModule>\n" .
-            "<IfModule !mod_authz_core.c>\nDeny from all\n</IfModule>\n");
-    }
-    return $dir;
-}
-
-/** Append one finished player to data/scores.txt  (time|name|score|players). */
-function save_score(string $name, int $score, int $players): void
-{
-    $line = time() . '|' . str_replace(['|', "\r", "\n"], ' ', $name) . '|' . $score . '|' . $players . "\n";
-    @file_put_contents(data_dir() . '/scores.txt', $line, FILE_APPEND | LOCK_EX);
-}
+require __DIR__ . '/scores.php';   // save_score() / load_scores()
 
 /* ---------- 3. Question bank (15 levels x 3 questions) ----------
    Each entry: [question, CORRECT answer, wrong, wrong, wrong].
@@ -401,10 +381,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Game finished: store every player's result once
                 if ($g['phase'] === 'over' && !$g['saved']) {
+                    $allSaved = true;
                     foreach ($g['players'] as $pl) {
-                        save_score($pl['name'], $pl['score'], count($g['players']));
+                        $allSaved = save_score($pl['name'], $pl['score'], count($g['players'])) && $allSaved;
                     }
-                    $g['saved'] = true;
+                    $g['saved']       = true;
+                    $g['save_failed'] = !$allSaved;
                 }
             }
         }
@@ -513,6 +495,9 @@ $nextIdx  = ($phase === 'ladder') ? next_alive($players, $g['turn']) : null;
                         <?php endif; ?>
                         <?php if ($phase === 'over'): ?>
                             <small>Game over - see the leaderboard.</small>
+                            <?php if (!empty($g['save_failed'])): ?>
+                                <small>Note: scores could not be written to the server file; they are kept for this session only.</small>
+                            <?php endif; ?>
                         <?php elseif ($nextIdx !== null): ?>
                             <small>Up next: <?= h($players[$nextIdx]['name']) ?></small>
                         <?php endif; ?>
