@@ -25,24 +25,9 @@ function h($s): string
     return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
 }
 
-/** Read and parse the score file into an array of rows (skips bad lines). */
-function load_scores(string $file): array
-{
-    $rows = [];
-    if (!is_readable($file)) {
-        return $rows;
-    }
-    foreach (file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
-        $parts = explode('|', $line);
-        if (count($parts) < 3 || !ctype_digit($parts[0]) || !ctype_digit($parts[2])) {
-            continue;
-        }
-        $rows[] = ['time' => (int)$parts[0], 'name' => $parts[1], 'score' => (int)$parts[2]];
-    }
-    return $rows;
-}
+require __DIR__ . '/scores.php';   // shared load_scores()
 
-$rows = load_scores(__DIR__ . '/data/scores.txt');
+$rows = load_scores();
 
 // Highest score first; earlier result wins a tie
 usort($rows, function ($a, $b) {
